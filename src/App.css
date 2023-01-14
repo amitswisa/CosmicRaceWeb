@@ -38,5 +38,8 @@
 .buttonGroup button {
   font-weight: bold;
   width: 20vw;
+  background-color: #be95c4;
+  border: 0;
+  color: #fff;
   margin-top: 10px;
 }
