@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-image: url("./images/bg.jpg");
+  background-image: url("../images/bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -36,10 +36,16 @@
 }
 
 .buttonGroup button {
-  font-weight: bold;
+  font-family: "MinstrelPosterWHG";
+  letter-spacing: 0.1rem;
   width: 300px;
-  background-color: #be95c4;
-  border: 0;
+  background-color: #003566;
+  border: 1px solid #fff;
   color: #fff;
   margin-top: 10px;
+}
+
+.buttonGroup button:hover {
+  background-color: #5e548e;
+  color: #fff;
 }
