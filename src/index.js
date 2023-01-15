@@ -1,13 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./styles/index.css";
-import MainPage from "./MainPage";
+import MainPage from "./Pages/mainPage";
+import RegisterPage from "./Pages/registerPage";
 import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./Pages/error_page";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/style.css";
+import logo from "./images/logo.png";
+import LoginPage from "./Pages/loginPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainPage logo={logo} />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/Register",
+    element: <RegisterPage logo={logo} />,
+  },
+  {
+    path: "/Login",
+    element: <LoginPage logo={logo} />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MainPage />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
