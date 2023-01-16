@@ -9,7 +9,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   function loginSubmit() {
-    fetch("http://localhost:6829/login", {
+    fetch("http://localhost:6829/test", {
       method: "POST",
       headers: {
         Accept: "application/json",
