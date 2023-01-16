@@ -19,7 +19,7 @@ const RegisterPage = () => {
     } else if (password !== repassword) {
       alert("Please make sure the passwords are equal.");
     } else {
-      await fetch("http://localhost:6829/registration", {
+      await fetch("http://102.37.146.210:6829/registration", {
         method: "POST",
         headers: {
           Accept: "application/json",
