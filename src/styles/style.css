@@ -110,7 +110,7 @@ pageContainer {
 }
 
 .buttonGroup a:hover {
-  background-color: #5e548e;
+  background-color: #c411cd;
   color: #fff;
 }
 
@@ -165,7 +165,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #5e548e;
+  background-color: #c411cd;
   color: #fff;
 }
 

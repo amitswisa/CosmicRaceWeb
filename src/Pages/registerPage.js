@@ -10,7 +10,7 @@ const RegisterPage = () => {
   const [repassword, setRepassword] = useState("");
   const [email, setEmail] = useState("");
 
-  function registerSubmit() {
+  async function registerSubmit() {
     // Checking if both passwords are equal
     if (username.length < 5) {
       alert("Username length must be at least 5 characters.");
@@ -19,7 +19,21 @@ const RegisterPage = () => {
     } else if (password !== repassword) {
       alert("Please make sure the passwords are equal.");
     } else {
-      alert("Work!");
+      await fetch("http://localhost:6829/registration", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          email: email,
+        }),
+      })
+        .then((response) => response.text())
+        .then((data) => alert(data))
+        .catch((err) => alert("Server is not working right now..."));
     }
   }
 
