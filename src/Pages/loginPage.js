@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Headline from "../Components/Headline";
 import NavbarComponent from "../Components/NavbarComponent";
 
+// Fixed
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
