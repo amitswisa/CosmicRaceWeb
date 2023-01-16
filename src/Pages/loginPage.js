@@ -10,15 +10,11 @@ const LoginPage = () => {
 
   function loginSubmit() {
     fetch("http://localhost:6829/test", {
-      method: "POST",
+      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
     })
       .then((response) => response.text())
       .then((data) => alert(data))
