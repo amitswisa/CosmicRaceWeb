@@ -33,7 +33,7 @@ const RegisterPage = () => {
       })
         .then((response) => response.text())
         .then((data) => alert(data))
-        .catch((err) => alert("Server is not working right now..."));
+        .catch((err) => alert(err));
     }
   }
 
