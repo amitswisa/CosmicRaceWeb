@@ -5,7 +5,6 @@ import Headline from "../components/Headline";
 import NavbarComponent from "../components/NavbarComponent";
 import { useNavigate } from "react-router-dom";
 import JWTManager from "../classes/JWTManager";
-const config = require("../config/config");
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ const RegisterPage = () => {
     } else if (password !== repassword) {
       alert("Please make sure the passwords are equal.");
     } else {
-      await fetch(config.serverHost + "/registration", {
+      await fetch(process.env.REACT_APP_SERVER_HOST + "/registration", {
         method: "POST",
         credentials: "include", // this will include the session cookie in the request
         headers: {

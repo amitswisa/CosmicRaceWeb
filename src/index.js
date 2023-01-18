@@ -8,10 +8,13 @@ import MainPage from "./pages/mainPage";
 import RegisterPage from "./pages/registerPage";
 import LogoutPage from "./pages/logoutPage";
 import ErrorPage from "./pages/error_page";
+import DashboardPage from "./pages/dashboardPage";
+import { Provider } from "react-redux";
 
 // Styles
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/style.css";
+import { store } from "./app/store";
 
 const router = createBrowserRouter([
   {
@@ -31,12 +34,18 @@ const router = createBrowserRouter([
     path: "/Logout",
     element: <LogoutPage />,
   },
+  {
+    path: "/dashboard",
+    element: <DashboardPage logo={logo} />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 

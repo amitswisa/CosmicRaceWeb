@@ -5,7 +5,6 @@ import Headline from "../components/Headline";
 import NavbarComponent from "../components/NavbarComponent";
 import JWTManager from "../classes/JWTManager";
 import { useNavigate } from "react-router-dom";
-const config = require("../config/config");
 
 // Fixed
 const LoginPage = () => {
@@ -15,7 +14,7 @@ const LoginPage = () => {
 
   // Async login request on submitting the form.
   async function loginSubmit() {
-    const response = await fetch(config.serverHost + "/login", {
+    const response = await fetch(process.env.REACT_APP_SERVER_HOST + "/login", {
       method: "POST",
       credentials: "include", // to send HTTP only cookies
       headers: {

@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import LinkNavigation from "../components/LinkNavigation";
+import JWTManager from "../classes/JWTManager";
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (JWTManager.isTokenValid()) navigate("/dashboard");
+  }, [navigate]);
+
   return (
     <header className="App-header">
       <Logo />
