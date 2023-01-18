@@ -1,5 +1,6 @@
 import LinkNavigation from "./LinkNavigation";
 import { useLocation } from "react-router-dom";
+import JWTManager from "../classes/JWTManager";
 
 function NavbarComponent() {
   const location = useLocation();
@@ -13,6 +14,9 @@ function NavbarComponent() {
         )}
         {location.pathname !== "/Register" && (
           <LinkNavigation link="/Register" text="Register" />
+        )}
+        {JWTManager.isTokenValid() && (
+          <LinkNavigation link="/Logout" text="Logout" />
         )}
       </div>
     </>

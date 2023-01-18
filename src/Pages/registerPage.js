@@ -1,10 +1,14 @@
-import { React, useState } from "react";
-import Input from "../Components/Input";
+import { React, useState, useEffect } from "react";
+import Input from "../components/Input";
 import Form from "react-bootstrap/Form";
-import Headline from "../Components/Headline";
-import NavbarComponent from "../Components/NavbarComponent";
+import Headline from "../components/Headline";
+import NavbarComponent from "../components/NavbarComponent";
+import { useNavigate } from "react-router-dom";
+import JWTManager from "../classes/JWTManager";
+const config = require("../config/config");
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
@@ -19,8 +23,9 @@ const RegisterPage = () => {
     } else if (password !== repassword) {
       alert("Please make sure the passwords are equal.");
     } else {
-      await fetch("http://localhost:6829/registration", {
+      await fetch(config.serverHost + "/registration", {
         method: "POST",
+        credentials: "include", // this will include the session cookie in the request
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -36,6 +41,13 @@ const RegisterPage = () => {
         .catch((err) => alert(err));
     }
   }
+
+  // Check if user already signed in.
+  useEffect(() => {
+    if (JWTManager.isTokenValid()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <>

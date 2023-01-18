@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import MainPage from "./Pages/mainPage";
-import RegisterPage from "./Pages/registerPage";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./Pages/error_page";
+import logo from "./images/logo.png";
+import LoginPage from "./pages/loginPage";
+import MainPage from "./pages/mainPage";
+import RegisterPage from "./pages/registerPage";
+import LogoutPage from "./pages/logoutPage";
+import ErrorPage from "./pages/error_page";
+
+// Styles
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/style.css";
-import logo from "./images/logo.png";
-import LoginPage from "./Pages/loginPage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <LoginPage logo={logo} />,
+  },
+  {
+    path: "/Logout",
+    element: <LogoutPage />,
   },
 ]);
 

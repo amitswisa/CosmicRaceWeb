@@ -1,17 +1,23 @@
-import { React, useState } from "react";
-import Input from "../Components/Input";
+import { React, useState, useEffect } from "react";
+import Input from "../components/Input";
 import Form from "react-bootstrap/Form";
-import Headline from "../Components/Headline";
-import NavbarComponent from "../Components/NavbarComponent";
+import Headline from "../components/Headline";
+import NavbarComponent from "../components/NavbarComponent";
+import JWTManager from "../classes/JWTManager";
+import { useNavigate } from "react-router-dom";
+const config = require("../config/config");
 
 // Fixed
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function loginSubmit() {
-    fetch("http://localhost:6829/login", {
+  // Async login request on submitting the form.
+  async function loginSubmit() {
+    const response = await fetch(config.serverHost + "/login", {
       method: "POST",
+      credentials: "include", // to send HTTP only cookies
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -20,11 +26,23 @@ const LoginPage = () => {
         username: username,
         password: password,
       }),
-    })
-      .then((response) => response.text())
-      .then((data) => alert(data))
-      .catch((err) => alert(err));
+    }).catch((err) => alert(err));
+
+    const data = await response.json();
+
+    alert(data.message);
+    if (data.success) {
+      JWTManager.storeToken(data.token);
+      navigate("/dashboard");
+    }
   }
+
+  // Each render repeat this.
+  useEffect(() => {
+    if (JWTManager.isTokenValid()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <>
