@@ -2,12 +2,8 @@ import jwtDecode from "jwt-decode";
 
 export default class JWTManager {
   static getTokenExpirationDate() {
-    const token = localStorage.getItem("jwt-token");
-
-    // in case token doesnt exist.
-    if (token == null) return null;
-
-    const decoded = jwtDecode(token);
+    const decoded = this.getDecypherToken();
+    if (decoded == null) return null;
     return new Date(decoded.exp * 1000).getTime();
   }
 
@@ -24,11 +20,32 @@ export default class JWTManager {
     return res;
   }
 
+  static getDecypherToken() {
+    const token = this.getToken();
+
+    // in case token doesnt exist.
+    if (token == null) return null;
+
+    const decoded = jwtDecode(token);
+    return decoded;
+  }
+
+  static getToken() {
+    return localStorage.getItem("jwt-token");
+  }
+
   static storeToken(token) {
     localStorage.setItem("jwt-token", token);
   }
 
   static deleteToken() {
     localStorage.removeItem("jwt-token");
+  }
+
+  static getUsername() {
+    const token = this.getDecypherToken();
+    if (token == null) return token;
+
+    return token.userName;
   }
 }
