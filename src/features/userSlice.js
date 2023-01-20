@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  counter: 12,
-  isLoading: false,
-  userToken: "213",
+  playSettings: {
+    isPlaying: false,
+    roomNumber: "",
+  },
 };
 
 // createAsyncThunk - redux toolkit
@@ -12,21 +13,17 @@ const userSlice = createSlice({
   name: "user-slice",
   initialState,
   reducers: {
-    incrementCounter: (state, action) => {
-      console.log(action);
-      state.counter = 4;
+    play: (state, action) => {
+      state.playSettings.isPlaying = true;
+      state.playSettings.roomNumber = action.payload.roomNumber;
     },
-    startLoading: (state, action) => {
-      state.isLoading = true;
-    },
-    loginExecute: (state) => {
-      state.isLoading = true;
-      //...
-      state.isLoading = false;
+    stop: (state) => {
+      state.playSettings.isPlaying = false;
+      state.playSettings.roomNumber = "";
     },
   },
 });
 
-export const { incrementCounter, startLoading } = userSlice.actions;
+export const { play, stop } = userSlice.actions;
 
 export default userSlice.reducer;

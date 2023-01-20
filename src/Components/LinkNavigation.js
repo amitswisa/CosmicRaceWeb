@@ -3,7 +3,7 @@ import "../styles/style.css";
 
 const LinkNavigation = (props) => {
   return (
-    <a className="LinkNavigation" href={props.link}>
+    <a className="LinkNavigation" style={props.style} href={props.link}>
       {props.text}
     </a>
   );

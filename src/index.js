@@ -7,6 +7,7 @@ import LoginPage from "./pages/loginPage";
 import MainPage from "./pages/mainPage";
 import RegisterPage from "./pages/registerPage";
 import LogoutPage from "./pages/logoutPage";
+import RoomPage from "./pages/roomPage";
 import ErrorPage from "./pages/error_page";
 import DashboardPage from "./pages/dashboardPage";
 import { Provider } from "react-redux";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardPage logo={logo} />,
+  },
+  {
+    path: "/room",
+    element: <RoomPage logo={logo} />,
   },
 ]);
 

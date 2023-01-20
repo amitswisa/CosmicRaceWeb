@@ -226,3 +226,24 @@ input[type="submit"]:hover {
 }
 
 /* END */
+
+/* FRIEND MODE PAGE */
+
+.FM_Title {
+  margin-bottom: 0;
+  font-family: "MinstrelPosterWHG", arial;
+}
+
+.fmlabel {
+  font-family: "MinstrelPosterWHG";
+  letter-spacing: 1.5px;
+  color: rgb(240, 104, 104);
+  font-size: 0.7em;
+}
+
+.rp_Form {
+  width: 100%;
+  align-items: center;
+}
+
+/* END */

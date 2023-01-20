@@ -17,7 +17,7 @@ const MainPage = () => {
       <div className="buttonGroup d-flex flex-column mb-3">
         <LinkNavigation link="/Login" text="Login with existing account" />
         <LinkNavigation link="/Register" text="Register with new account" />
-        <LinkNavigation link="/" text="Play as a guest" />
+        <LinkNavigation link="/room" text="Play as a guest" />
       </div>
     </header>
   );
