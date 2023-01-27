@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   // Async login request on submitting the form.
   async function loginSubmit() {
-    const response = await fetch(process.env.REACT_APP_SERVER_HOST + "/login", {
+    const response = await fetch("http://localhost:6829/login", {
       method: "POST",
       credentials: "include", // to send HTTP only cookies
       headers: {
