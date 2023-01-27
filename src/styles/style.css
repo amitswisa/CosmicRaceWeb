@@ -247,3 +247,33 @@ input[type="submit"]:hover {
 }
 
 /* END */
+
+/* PLAY SCREEN - CONTROLLER */
+.scoreBoard {
+  background-color: #ffffff;
+  box-shadow: 2px 2px 10px #2e2e2e;
+  padding: 10px 20px;
+  border-radius: 12px;
+  opacity: 0.9;
+  color: #3e3e3e;
+  align-items: center;
+  font-family: "MinstrelPosterWHG";
+}
+
+.scoreBoard .right {
+  flex: 1;
+}
+
+.scoreBoard .mpBar {
+  flex: 1;
+}
+
+.scoreBoard .mpBar .progressBar {
+  height: 25px;
+}
+
+.scoreBoard .right span {
+  color: rgb(240, 104, 104);
+  letter-spacing: 1px;
+}
+/* END */

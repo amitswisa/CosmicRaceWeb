@@ -9,7 +9,9 @@ import RegisterPage from "./pages/registerPage";
 import LogoutPage from "./pages/logoutPage";
 import RoomPage from "./pages/roomPage";
 import ErrorPage from "./pages/error_page";
+import ControllerPage from "./pages/controllerPage";
 import DashboardPage from "./pages/dashboardPage";
+
 import { Provider } from "react-redux";
 
 // Styles
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/room",
     element: <RoomPage logo={logo} />,
+  },
+  {
+    path: "/play",
+    element: <ControllerPage />,
   },
 ]);
 
