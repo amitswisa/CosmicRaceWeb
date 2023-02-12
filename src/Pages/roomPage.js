@@ -23,7 +23,7 @@ const RoomPage = (props) => {
   return (
     <pageContainer>
       <NavbarComponent />
-      <Container>
+      <Container style={{ marginTop: "60px" }}>
         <div style={{ textAlign: "center" }}>
           <h2 className="headLine FM_Title">Friend Mode</h2>
           <span className="fmlabel">
