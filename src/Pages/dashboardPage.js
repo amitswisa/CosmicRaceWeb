@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import JWTManager from "../classes/JWTManager";
 import NavbarComponent from "../components/NavbarComponent";
@@ -11,8 +12,11 @@ import DataBlock from "../components/DataBlock";
 import Table from "react-bootstrap/Table";
 import RadarChart from "../components/RadarChart";
 import AppContainer from "../components/AppContainer";
+import { update } from "../features/userSlice";
 
-const DashboardPage = (props) => {
+const DashboardPage = () => {
+  const dispatch = useDispatch();
+  let userCoins = useSelector((state) => state.user.userData.coins);
   const navigate = useNavigate();
 
   const chartData = {
@@ -32,6 +36,26 @@ const DashboardPage = (props) => {
     ],
   };
 
+  useLayoutEffect(() => {
+    fetch(process.env.REACT_APP_SERVER_HOST + "/update-user-data", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JWTManager.getToken()}`,
+      },
+      body: JSON.stringify({
+        username: JWTManager.getUsername(),
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) dispatch(update(data));
+        else alert(data.message);
+      })
+      .catch((err) => alert(err));
+  }, []);
+
   useEffect(() => {
     if (!JWTManager.isTokenValid()) navigate("/");
   }, [navigate]);
@@ -50,7 +74,7 @@ const DashboardPage = (props) => {
       </Container>
       <AppContainer className="userInfo d-flex flex-row">
         <InfoBlock text={"Hello, " + JWTManager.getUsername()} />
-        <InfoBlock text="Coins: 1000" />
+        <InfoBlock text={"Coins: " + userCoins} />
         <InfoBlock text="Win: 250" />
         <InfoBlock text="Lose: 120" />
       </AppContainer>

@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  playSettings: {
-    isPlaying: false,
-    roomNumber: "",
+  userData: {
+    coins: 0,
   },
 };
 
@@ -13,17 +12,12 @@ const userSlice = createSlice({
   name: "user-slice",
   initialState,
   reducers: {
-    play: (state, action) => {
-      state.playSettings.isPlaying = true;
-      state.playSettings.roomNumber = action.payload.roomNumber;
-    },
-    stop: (state) => {
-      state.playSettings.isPlaying = false;
-      state.playSettings.roomNumber = "";
+    update: (state, action) => {
+      state.userData.coins = action.payload.coins;
     },
   },
 });
 
-export const { play, stop } = userSlice.actions;
+export const { update } = userSlice.actions;
 
 export default userSlice.reducer;

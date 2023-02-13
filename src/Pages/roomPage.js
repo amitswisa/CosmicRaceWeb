@@ -5,18 +5,17 @@ import { Container } from "react-bootstrap";
 import Input from "../components/Input";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { play } from "../features/userSlice";
 
-const RoomPage = (props) => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.user.playSettings.roomNumber);
+const RoomPage = () => {
+  //const dispatch = useDispatch();
+  //const state = useSelector((state) => state.user.playSettings.roomNumber);
   const navigate = useNavigate();
   const [roomNumber, setRoomNumber] = useState("");
 
   function searchRoom() {
     // TODO - VALIDATE ROOM NUMBER AGAINST UNITY GAME SERVER.
-    dispatch(play(roomNumber));
-    alert(state);
+    //dispatch(play(roomNumber));
+    //alert(state);
     navigate("/play");
   }
 
