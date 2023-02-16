@@ -29,6 +29,7 @@ function NavbarComponent() {
                       Change Password
                     </NavDropdown.Item>
                   </NavDropdown>
+                  <Nav.Link href="/room">Play</Nav.Link>
                 </Nav>
                 <Nav>
                   <Navbar.Text>
