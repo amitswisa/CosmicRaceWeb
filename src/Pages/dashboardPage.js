@@ -92,7 +92,7 @@ const DashboardPage = () => {
         else alert(data.message);
       })
       .catch((err) => alert(err));
-  }, []);
+  }, [dispatch]);
 
   // Check user login token with every render.
   useEffect(() => {

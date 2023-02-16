@@ -18,7 +18,7 @@ const RegisterPage = () => {
     if (username.length < 5) {
       alert("Username length must be at least 5 characters.");
     } else if (password.length < 6) {
-      alert("Password length must be at least 5 characters.");
+      alert("Password length must be at least 6 characters.");
     } else if (password !== repassword) {
       alert("Please make sure the passwords are equal.");
     } else {

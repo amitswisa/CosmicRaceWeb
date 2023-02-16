@@ -1,5 +1,3 @@
-import Input from "./Input";
-
 const Product = (props) => {
   return (
     <div className="product-card">

@@ -12,6 +12,7 @@ import ErrorPage from "./pages/error_page";
 import ControllerPage from "./pages/controllerPage";
 import DashboardPage from "./pages/dashboardPage";
 import StorePage from "./pages/storePage";
+import ChangePasswordPage from "./pages/changePasswordPage";
 
 import { Provider } from "react-redux";
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/store",
     element: <StorePage />,
+  },
+  {
+    path: "/change-password",
+    element: <ChangePasswordPage />,
   },
 ]);
 

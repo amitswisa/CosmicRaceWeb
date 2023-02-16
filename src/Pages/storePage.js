@@ -7,7 +7,7 @@ import Product from "../components/Product";
 
 const StorePage = (props) => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([
+  const [products] = useState([
     {
       title: "Hero Helmet",
       imageSource: "character.png",
