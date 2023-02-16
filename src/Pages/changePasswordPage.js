@@ -34,6 +34,7 @@ const ChangePasswordPage = () => {
       }
     );
 
+    // Retreive data.
     const responseJson = await request.json();
     alert(responseJson.message);
 
