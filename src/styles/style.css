@@ -349,24 +349,34 @@ footer {
 .store-page {
   display: flex;
   justify-content: center;
+  flex-direction: row;
   padding: 40px 0;
+}
+
+.store-page-categories {
+  flex: 1;
+  text-align: left;
+}
+
+.store-page-categories ul {
+  list-style-type: none;
 }
 
 .store-page-container {
   display: flex;
   flex-wrap: wrap;
-  max-width: 1200px;
+  flex: 3;
   width: 100%;
 }
 
 .product-card {
   width: calc(33.33% - 20px);
   margin: 10px;
-  text-align: left;
-  background-color: #212529;
+  background: #212529;
   border-radius: 12px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  text-align: center;
 }
 
 .product-image {
@@ -374,34 +384,47 @@ footer {
   display: flex;
 }
 
-.product-desc {
-  flex: 2;
-  padding: 10px 5px 0 5px;
-  margin: 5px 0 0 10px;
+.product-card img {
+  text-align: center;
+  width: 100px;
+  margin-top: 20px;
 }
 
-.product-card img {
-  margin: 30px auto;
-  margin-left: 20px;
+.product-desc {
+  padding-top: 15px;
 }
 
 .product-card p {
   font-size: 12px;
+  font-weight: bold;
 }
 
 .product-card input[type="submit"] {
-  margin: 15px 0 0 0;
+  margin-top: -10px;
+  margin-bottom: 10px;
   max-width: 100px;
-  float: right;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 12px;
 }
 
-.product-card .prod-price-label {
-  font-size: 14px;
-  color: rgb(240, 104, 104);
+.product-card input[type="submit"]:hover {
+  background-color: #fff;
+  color: #212529;
+  border: 2px solid #212529;
+  font-weight: bold;
 }
 
 .product-card .prod-price {
-  font-size: 14px;
+  font-size: 18px;
+}
+
+.prod-price img {
+  width: 20px;
+  position: relative;
+  top: -13px;
+  right: 3px;
 }
 
 @media (max-width: 768px) {

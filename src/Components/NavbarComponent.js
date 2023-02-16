@@ -25,9 +25,6 @@ function NavbarComponent() {
                   <Nav.Link href="/dashboard">Home</Nav.Link>
                   <Nav.Link href="/store">Store</Nav.Link>
                   <NavDropdown title="Settings" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">
-                      Profile
-                    </NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">
                       Change Password
                     </NavDropdown.Item>

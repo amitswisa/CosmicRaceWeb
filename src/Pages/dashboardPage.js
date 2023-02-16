@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import JWTManager from "../classes/JWTManager";
@@ -13,29 +13,67 @@ import Table from "react-bootstrap/Table";
 import RadarChart from "../components/RadarChart";
 import AppContainer from "../components/AppContainer";
 import { update } from "../features/userSlice";
+import Slider from "react-slick";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
   let userCoins = useSelector((state) => state.user.userData.coins);
   const navigate = useNavigate();
 
-  const chartData = {
-    labels: ["Magic Points", "Speed", "Power", "Defence", "Accuracy"],
-    datasets: [
-      {
-        label: "Character Skills",
-        fill: true,
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgb(255, 99, 132)",
-        pointBackgroundColor: "rgb(255, 99, 132)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(255, 99, 132)",
-        data: [56, 81, 89, 100, 21],
-      },
-    ],
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 8000,
+    cssEase: "linear",
+  };
+  const radarChartLabels = [
+    "Magic Points",
+    "Speed",
+    "Power",
+    "Defence",
+    "Accuracy",
+  ];
+  const chartData = [
+    {
+      labels: radarChartLabels,
+      characterImage: require("../images/character.png"),
+      datasets: [
+        {
+          label: "Character 1",
+          fill: true,
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "rgb(255, 99, 132)",
+          data: [20, 56, 89, 51, 100],
+        },
+      ],
+    },
+    {
+      labels: radarChartLabels,
+      characterImage: require("../images/character2.png"),
+      datasets: [
+        {
+          label: "Character 2",
+          fill: true,
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "rgb(255, 99, 132)",
+          data: [70, 26, 99, 71, 100],
+        },
+      ],
+    },
+  ];
+
+  const [currentCharacterIndex, setCurrentCharacterIndex] = useState(0);
+
+  // Switch character and character's stats.
+  const handleCharacterChange = (index) => {
+    setCurrentCharacterIndex(index);
   };
 
+  // Fetch logged user data from server before rendering page.
   useLayoutEffect(() => {
     fetch(process.env.REACT_APP_SERVER_HOST + "/update-user-data", {
       method: "POST",
@@ -56,6 +94,7 @@ const DashboardPage = () => {
       .catch((err) => alert(err));
   }, []);
 
+  // Check user login token with every render.
   useEffect(() => {
     if (!JWTManager.isTokenValid()) navigate("/");
   }, [navigate]);
@@ -73,10 +112,23 @@ const DashboardPage = () => {
         </Row>
       </Container>
       <AppContainer className="userInfo d-flex flex-row">
-        <InfoBlock text={"Hello, " + JWTManager.getUsername()} />
-        <InfoBlock text={"Coins: " + userCoins} />
-        <InfoBlock text="Win: 250" />
-        <InfoBlock text="Lose: 120" />
+        <InfoBlock>Hello, {JWTManager.getUsername()}</InfoBlock>
+        <InfoBlock>
+          {userCoins}{" "}
+          <img
+            src={require("../images/coin.png")}
+            style={{
+              paddingLeft: "5px",
+              paddingRight: "5px",
+              position: "relative",
+              top: "-1px",
+            }}
+            width="28px"
+            alt=""
+          />
+        </InfoBlock>
+        <InfoBlock>Win: 250</InfoBlock>
+        <InfoBlock>Lose: 120</InfoBlock>
       </AppContainer>
       <AppContainer className="d-flex flex-column flex-lg-row">
         <DataBlock title="Game History">
@@ -120,18 +172,35 @@ const DashboardPage = () => {
                 <td>Thornton</td>
                 <td>@fat</td>
               </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
             </tbody>
           </Table>
         </DataBlock>
         <DataBlock title="Characters">
-          <Container className="d-flex flex-row" style={{ marginTop: "20px" }}>
-            <div className="characterImage">
-              <img src={require("../images/character.png")} alt="" />
-            </div>
-            <div className="characterData">
-              <RadarChart data={chartData} />
-            </div>
-          </Container>
+          <Slider
+            {...sliderSettings}
+            beforeChange={handleCharacterChange}
+            initialSlide={currentCharacterIndex}
+            style={{ width: "470px", marginLeft: "12px" }}>
+            {chartData.map((data, index) => (
+              <div
+                key={index}
+                className="d-flex flex-row"
+                style={{ marginTop: "20px" }}>
+                <div className="characterImage">
+                  <img src={data.characterImage} alt="" />
+                </div>
+                <div className="characterData">
+                  <RadarChart data={data} />
+                </div>
+              </div>
+            ))}
+          </Slider>
         </DataBlock>
       </AppContainer>
       <footer className="text-white">

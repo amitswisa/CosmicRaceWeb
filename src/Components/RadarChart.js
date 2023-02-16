@@ -6,6 +6,14 @@ const RadarChart = ({ data }) => {
   const [chartId, setChartId] = useState(0);
   const chartRef = useRef(null);
 
+  const options = {
+    scale: {
+      ticks: {
+        beginAtZero: true,
+      },
+    },
+  };
+
   useEffect(() => {
     if (chartRef.current && chartRef.current.chartInstance) {
       chartRef.current.chartInstance.destroy();
@@ -13,7 +21,14 @@ const RadarChart = ({ data }) => {
     }
   }, [chartId]);
 
-  return <Radar data={data} ref={chartRef} />;
+  return (
+    <Radar
+      data={data}
+      options={options}
+      ref={chartRef}
+      style={{ width: "300px" }}
+    />
+  );
 };
 
 export default RadarChart;

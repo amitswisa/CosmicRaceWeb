@@ -1,5 +1,5 @@
 const InfoBlock = (props) => {
-  return <div className="infoBlock">{props.text}</div>;
+  return <div className="infoBlock">{props.children}</div>;
 };
 
 export default InfoBlock;

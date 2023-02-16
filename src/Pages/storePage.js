@@ -13,7 +13,6 @@ const StorePage = (props) => {
       imageSource: "character.png",
       imageAlt: "",
       imageWidth: "100",
-      text: "Test Test Test Test",
       price: "1000",
     },
     {
@@ -21,7 +20,6 @@ const StorePage = (props) => {
       imageSource: "character.png",
       imageAlt: "",
       imageWidth: "100",
-      text: "Test Test Test Test",
       price: "1000",
     },
     {
@@ -29,7 +27,6 @@ const StorePage = (props) => {
       imageSource: "character.png",
       imageAlt: "",
       imageWidth: "100",
-      text: "Test Test Test Test",
       price: "1000",
     },
     {
@@ -37,7 +34,6 @@ const StorePage = (props) => {
       imageSource: "character.png",
       imageAlt: "",
       imageWidth: "100",
-      text: "Test Test Test Test",
       price: "1000",
     },
     {
@@ -45,7 +41,6 @@ const StorePage = (props) => {
       imageSource: "character.png",
       imageAlt: "",
       imageWidth: "100",
-      text: "Test Test Test Test",
       price: "1000",
     },
     {
@@ -53,7 +48,6 @@ const StorePage = (props) => {
       imageSource: "character.png",
       imageAlt: "",
       imageWidth: "100",
-      text: "Test Test Test Test",
       price: "1000",
     },
   ]);
@@ -68,6 +62,28 @@ const StorePage = (props) => {
       <AppContainer style={{ textAlign: "center" }} className="text-white">
         <h2>Store</h2>
         <div className="store-page">
+          <div className="store-page-categories">
+            <ul>
+              <li>
+                <h3>Categories</h3>
+              </li>
+              <li>
+                <span>Hats</span>
+              </li>
+              <li>
+                <span>Shirts</span>
+              </li>
+              <li>
+                <span>Pants</span>
+              </li>
+              <li>
+                <span>Shoes</span>
+              </li>
+              <li>
+                <span>Accessories</span>
+              </li>
+            </ul>
+          </div>
           <div className="store-page-container">
             {products.map((item) => (
               <Product
@@ -75,7 +91,6 @@ const StorePage = (props) => {
                 imageSource={item.imageSource}
                 imageAlt={item.imageAlt}
                 imageWidth={item.imageWidth}
-                text={item.text}
                 price={item.price}
               />
             ))}

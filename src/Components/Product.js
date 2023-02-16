@@ -12,12 +12,12 @@ const Product = (props) => {
       </div>
       <div className="product-desc">
         <h4>{props.title}</h4>
-        <p>{props.text}</p>
         <p>
-          <span className="prod-price-label">Price:</span>
-          <span className="prod-price"> {props.price}</span>
+          <span className="prod-price">
+            {props.price} <img src={require("../images/coin.png")} alt="" />
+          </span>
         </p>
-        <Input type="submit" value="Buy" />
+        <input type="submit" value="Buy" />
       </div>
     </div>
   );
