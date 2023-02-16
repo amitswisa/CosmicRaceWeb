@@ -59,31 +59,30 @@ const StorePage = (props) => {
   return (
     <div className="dashboardStyle">
       <NavbarComponent />
-      <AppContainer style={{ textAlign: "center" }} className="text-white">
-        <h2>Store</h2>
-        <div className="store-page">
+      <AppContainer className="text-white">
+        <div className="text-center">
+          <h2>Store</h2>
           <div className="store-page-categories">
-            <ul>
-              <li>
-                <h3>Categories</h3>
-              </li>
-              <li>
-                <span>Hats</span>
-              </li>
-              <li>
-                <span>Shirts</span>
-              </li>
-              <li>
-                <span>Pants</span>
-              </li>
-              <li>
-                <span>Shoes</span>
-              </li>
-              <li>
-                <span>Accessories</span>
-              </li>
-            </ul>
+            <div>
+              <img src={require("../images/hat_icon.png")} alt="" />
+            </div>
+            <div>
+              <img src={require("../images/shirt_icon.png")} alt="" />
+            </div>
+            <div>
+              <img src={require("../images/pants_icon.png")} alt="" />
+            </div>
+            <div>
+              <img src={require("../images/shoe_icon.png")} alt="" />
+            </div>
+            <div>
+              <img src={require("../images/accessories_icon.png")} alt="" />
+            </div>
           </div>
+        </div>
+      </AppContainer>
+      <AppContainer style={{ textAlign: "center" }} className="text-white">
+        <div className="store-page">
           <div className="store-page-container">
             {products.map((item) => (
               <Product

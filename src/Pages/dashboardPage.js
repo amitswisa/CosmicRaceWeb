@@ -18,6 +18,8 @@ import Slider from "react-slick";
 const DashboardPage = () => {
   const dispatch = useDispatch();
   let userCoins = useSelector((state) => state.user.userData.coins);
+  let userWins = useSelector((state) => state.user.userData.wins);
+  let userLoses = useSelector((state) => state.user.userData.loses);
   const navigate = useNavigate();
 
   const sliderSettings = {
@@ -127,8 +129,8 @@ const DashboardPage = () => {
             alt=""
           />
         </InfoBlock>
-        <InfoBlock>Win: 250</InfoBlock>
-        <InfoBlock>Lose: 120</InfoBlock>
+        <InfoBlock>Win: {userWins}</InfoBlock>
+        <InfoBlock>Lose: {userLoses}</InfoBlock>
       </AppContainer>
       <AppContainer className="d-flex flex-column flex-lg-row">
         <DataBlock title="Game History">
