@@ -44,7 +44,12 @@ function NavbarComponent() {
                           marginRight: "5px",
                           borderRadius: "7px",
                         }}>
-                        <Download style={{ marginRight: "5px" }} /> Download
+                        <Download style={{ marginRight: "5px" }} />
+                        <a
+                          href="InstallerFolder/CosmicRaceInstaller.exe"
+                          download="CosmicRaceInstaller">
+                          <button type="button">Download</button>
+                        </a>
                       </button>
                     </a>{" "}
                     |{" "}
