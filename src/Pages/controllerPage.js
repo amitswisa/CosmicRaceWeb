@@ -12,14 +12,14 @@ const ControllerPage = () => {
   const ws = wsContext.webSocket;
 
   const [isPortrait, setIsPortrait] = useState(
-    window.innerHeight > window.innerWidth
+    window.innerHeight < window.innerWidth
   ); // Initialize state based on current orientation
   const [gameStarted, setGameStarted] = useState(true);
 
   // Orientation check
   useEffect(() => {
     function handleResize() {
-      setIsPortrait(window.innerHeight > window.innerWidth); // Update state based on current orientation
+      setIsPortrait(window.innerHeight < window.innerWidth); // Update state based on current orientation
     }
 
     window.addEventListener("resize", handleResize);
@@ -74,17 +74,31 @@ const ControllerPage = () => {
               </Container>
               <Container className="controllerGui d-flex flex-column">
                 <h2>amitswisa</h2>
-                <Container className="d-flex flex-row controllerKeys">
-                  <div className="left">
-                    <button className="controllerBtn btn btn-danger">
-                      Left
-                    </button>
-                  </div>
-                  <div className="right">
-                    <button className="controllerBtn btn btn-danger">
-                      Right
-                    </button>
-                  </div>
+                <Container className="d-flex flex-row">
+                  <Container className="left d-flex flex-row controllerMoveKeys">
+                    <div className="left">
+                      <button className="controllerBtn btn btn-danger">
+                        🠔
+                      </button>
+                    </div>
+                    <div className="right">
+                      <button className="controllerBtn btn btn-danger">
+                        🠖
+                      </button>
+                    </div>
+                  </Container>
+                  <Container className="d-flex flex-row controllerActionKeys">
+                    <div className="left">
+                      <button className="controllerBtn btn btn-danger">
+                        🠔
+                      </button>
+                    </div>
+                    <div className="right">
+                      <button className="controllerBtn btn btn-danger">
+                        ▲
+                      </button>
+                    </div>
+                  </Container>
                 </Container>
               </Container>
             </>
