@@ -1,22 +1,53 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import WebSocketContext from "../contexts/WebSocketContext";
 import NavbarComponent from "../components/NavbarComponent";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Input from "../components/Input";
 import Form from "react-bootstrap/Form";
-import { useDispatch, useSelector } from "react-redux";
 
 const RoomPage = () => {
-  //const dispatch = useDispatch();
-  //const state = useSelector((state) => state.user.playSettings.roomNumber);
   const navigate = useNavigate();
   const [roomNumber, setRoomNumber] = useState("");
+  const [username, setUsername] = useState("");
+  const [character, setCharacter] = useState("");
+  const wsContext = useContext(WebSocketContext);
 
-  function searchRoom() {
-    // TODO - VALIDATE ROOM NUMBER AGAINST UNITY GAME SERVER.
-    //dispatch(play(roomNumber));
-    //alert(state);
-    navigate("/play");
+  function joinRoom() {
+    const ws = new WebSocket("ws://localhost:8081");
+
+    ws.onopen = () => {
+      // On connection open, send a message to the server.
+
+      // On connection open, send a message to the server.
+      const message = {
+        messagetype: "CONFIGURATION",
+        username: username,
+        roomid: roomNumber,
+        characterid: Number(character), // convert character string to number
+      };
+
+      ws.send(JSON.stringify(message));
+    };
+
+    ws.onmessage = (event) => {
+      // When the client receives a message
+      if (event.data === "OK") {
+        alert("Successfully joined room.");
+        wsContext.setWebSocket(ws);
+        navigate("/play");
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error(`WebSocket error: ${error}`);
+    };
+
+    ws.onclose = () => {
+      wsContext.setWebSocket(null);
+      alert("Connection to server closed.");
+      navigate("/room");
+    };
   }
 
   return (
@@ -36,15 +67,30 @@ const RoomPage = () => {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              searchRoom();
+              joinRoom();
             }}>
+            <Input
+              name="username"
+              type="text"
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username..."
+            />
+            <Form.Select
+              aria-label="Character selection"
+              onChange={(e) => setCharacter(e.target.value)}>
+              <option>Choose character</option>
+              <option value="1">Character 1</option>
+              <option value="2">Character 2</option>
+              <option value="3">Character 3</option>
+              <option value="4">Character 4</option>
+            </Form.Select>
             <Input
               name="roomNumber"
               type="text"
               onChange={(e) => setRoomNumber(e.target.value)}
               placeholder="#Room number..."
             />
-            <Input name="roomNumber" type="submit" value="Search" />
+            <Input name="roomNumber" type="submit" value="Join Room" />
           </Form>
         </div>
       </Container>

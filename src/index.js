@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
+import WebSocketContext from "./contexts/WebSocketContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import logo from "./images/logo.png";
 import LoginPage from "./pages/loginPage";
@@ -61,16 +62,21 @@ const router = createBrowserRouter([
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
-);
+const App = () => {
+  const [webSocket, setWebSocket] = useState(null);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+  return (
+    <React.StrictMode>
+      <Provider store={store}>
+        <WebSocketContext.Provider value={{ webSocket, setWebSocket }}>
+          <RouterProvider router={router} />
+        </WebSocketContext.Provider>
+      </Provider>
+    </React.StrictMode>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />); // change this line to render the App component
+
 reportWebVitals();
