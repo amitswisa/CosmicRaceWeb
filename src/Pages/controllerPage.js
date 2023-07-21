@@ -32,7 +32,7 @@ const ControllerPage = () => {
     };
   }, []);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (!ws) {
       alert("Your are not registered to any room..");
       navigate("/room");
@@ -48,7 +48,7 @@ const ControllerPage = () => {
       wsContext.setWebSocket(null);
       navigate("/");
     };
-  }, [ws]); */
+  }, [ws]);
 
   return (
     <pageContainer>
