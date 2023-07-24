@@ -40,7 +40,12 @@ const ControllerPage = () => {
     }
 
     ws.onmessage = (event) => {
-      console.debug("Received message from server: ", event.data);
+      const res = event.data;
+
+      if (res === "isAlive\n") {
+        ws.send("ALIVE");
+        return;
+      }
     };
 
     ws.onclose = () => {
