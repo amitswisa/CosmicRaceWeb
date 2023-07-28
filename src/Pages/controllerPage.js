@@ -7,6 +7,7 @@ import Headline from "../components/Headline";
 
 const ControllerPage = () => {
   const navigate = useNavigate();
+  const savedUsername = localStorage.getItem("username");
 
   const wsContext = useContext(WebSocketContext);
   const ws = wsContext.webSocket;
@@ -43,6 +44,7 @@ const ControllerPage = () => {
       const res = event.data;
 
       if (res === "isAlive\n") {
+        console.log("response to server: alive");
         ws.send("ALIVE");
         return;
       }
@@ -54,6 +56,62 @@ const ControllerPage = () => {
       navigate("/");
     };
   }, [ws]);
+
+  const leftButtonPressed = (e) => {
+    console.log("left key pressed");
+
+    // send left key pressed to server
+
+    const message = {
+      m_MessageType: "COMMAND",
+      m_Username: savedUsername,
+      m_Action: "RUN_LEFT",
+      m_Location: { x: 0.0, y: 0.0 },
+    };
+
+    ws.send(JSON.stringify(message)); // Convert object to JSON string
+  };
+
+  const rightButtonPressed = (e) => {
+    console.log("right key pressed");
+
+    // send left key pressed to server
+
+    const message = {
+      m_MessageType: "COMMAND",
+      m_Username: savedUsername,
+      m_Action: "RUN_RIGHT",
+      m_Location: { x: 0.0, y: 0.0 },
+    };
+
+    ws.send(JSON.stringify(message)); // Convert object to JSON string
+  };
+
+  const jumpButtonPressed = (e) => {
+    console.log("right key pressed");
+
+    // send left key pressed to server
+
+    const message = {
+      m_MessageType: "COMMAND",
+      m_Username: savedUsername,
+      m_Action: "JUMP",
+      m_Location: { x: 0.0, y: 0.0 },
+    };
+
+    ws.send(JSON.stringify(message)); // Convert object to JSON string
+  };
+
+  const onButtonReleased = (e) => {
+    const message = {
+      m_MessageType: "COMMAND",
+      m_Username: savedUsername,
+      m_Action: "IDLE",
+      m_Location: { x: 0.0, y: 0.0 },
+    };
+
+    ws.send(JSON.stringify(message)); // Convert object to JSON string
+  };
 
   // update
 
@@ -80,16 +138,22 @@ const ControllerPage = () => {
                 </div>
               </Container>
               <Container className="controllerGui d-flex flex-column">
-                <h2>amitswisa</h2>
+                <h2>{savedUsername}</h2>
                 <Container className="d-flex flex-row">
                   <Container className="left d-flex flex-row controllerMoveKeys">
                     <div className="left">
-                      <button className="controllerBtn btn btn-danger">
+                      <button
+                        onMouseDown={leftButtonPressed}
+                        onMouseUp={onButtonReleased}
+                        className="controllerBtn btn btn-danger">
                         🠔
                       </button>
                     </div>
                     <div className="right">
-                      <button className="controllerBtn btn btn-danger">
+                      <button
+                        onMouseDown={rightButtonPressed}
+                        onMouseUp={onButtonReleased}
+                        className="controllerBtn btn btn-danger">
                         🠖
                       </button>
                     </div>
@@ -97,11 +161,14 @@ const ControllerPage = () => {
                   <Container className="d-flex flex-row controllerActionKeys">
                     <div className="left">
                       <button className="controllerBtn btn btn-danger">
-                        🠔
+                        attack
                       </button>
                     </div>
                     <div className="right">
-                      <button className="controllerBtn btn btn-danger">
+                      <button
+                        onMouseDown={jumpButtonPressed}
+                        onMouseUp={onButtonReleased}
+                        className="controllerBtn btn btn-danger">
                         ▲
                       </button>
                     </div>

@@ -31,8 +31,8 @@ const RoomPage = () => {
     ws.onmessage = (event) => {
       // When the client receives a message
       if (event.data === "OK") {
-        alert("Successfully joined room.");
         wsContext.setWebSocket(ws);
+        localStorage.setItem("username", username);
         navigate("/play");
       }
     };
