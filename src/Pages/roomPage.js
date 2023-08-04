@@ -28,6 +28,7 @@ const RoomPage = () => {
       ws.send(JSON.stringify(message));
     };
 
+    // New
     ws.onmessage = (event) => {
       // When the client receives a message
       if (event.data === "OK") {
