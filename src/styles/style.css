@@ -65,7 +65,7 @@ pageContainer {
 }
 
 .App-logo {
-  height: 40vmin;
+  width: 45vw !important;
   pointer-events: none;
 }
 
@@ -91,7 +91,7 @@ pageContainer {
   font-family: "MinstrelPosterWHG";
   letter-spacing: 0.1rem;
   width: 300px;
-  background-color: #003566;
+  background-color: #8a1ea0;
   border: 1px solid #fff;
   color: #fff;
   text-align: center;
@@ -164,7 +164,7 @@ pageContainer {
 input[type="submit"] {
   font-family: "MinstrelPosterWHG";
   letter-spacing: 0.1rem;
-  background-color: #003566;
+  background-color: #8a1ea0;
   border: 1px solid #fff;
   color: #fff;
   text-align: center;
