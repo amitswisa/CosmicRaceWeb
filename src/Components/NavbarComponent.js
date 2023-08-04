@@ -23,7 +23,6 @@ function NavbarComponent() {
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
                   <Nav.Link href="/dashboard">Home</Nav.Link>
-                  <Nav.Link href="/store">Store</Nav.Link>
                   <NavDropdown title="Settings" id="collasible-nav-dropdown">
                     <NavDropdown.Item href="/change-password">
                       Change Password

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from "react";
 import WebSocketContext from "../contexts/WebSocketContext";
 import { useNavigate } from "react-router-dom";
@@ -143,16 +145,16 @@ const ControllerPage = () => {
                   <Container className="left d-flex flex-row controllerMoveKeys">
                     <div className="left">
                       <button
-                        onMouseDown={leftButtonPressed}
-                        onMouseUp={onButtonReleased}
+                        onTouchStart={leftButtonPressed}
+                        onTouchEnd={onButtonReleased}
                         className="controllerBtn btn btn-danger">
                         🠔
                       </button>
                     </div>
                     <div className="right">
                       <button
-                        onMouseDown={rightButtonPressed}
-                        onMouseUp={onButtonReleased}
+                        onTouchStart={rightButtonPressed}
+                        onTouchEnd={onButtonReleased}
                         className="controllerBtn btn btn-danger">
                         🠖
                       </button>
@@ -164,10 +166,10 @@ const ControllerPage = () => {
                         attack
                       </button>
                     </div>
-                    <div className="right">
+                    <div className="right jumpBtn">
                       <button
-                        onMouseDown={jumpButtonPressed}
-                        onMouseUp={onButtonReleased}
+                        onTouchStart={jumpButtonPressed}
+                        onTouchEnd={onButtonReleased}
                         className="controllerBtn btn btn-danger">
                         ▲
                       </button>

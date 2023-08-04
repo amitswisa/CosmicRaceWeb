@@ -507,8 +507,24 @@ footer {
   margin: 0 10px;
 }
 
-.controllerKeys {
-  margin-top: 200px;
+.controllerMoveKeys {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20vh 10px;
+}
+
+.controllerActionKeys {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 25vh 10px;
+}
+
+.jumpBtn {
+  margin-top: -15vh;
 }
 
 /* Mobile styles */
