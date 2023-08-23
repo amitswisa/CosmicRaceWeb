@@ -65,7 +65,11 @@ const ControllerPage = () => {
     e.preventDefault();
     sendCommand(action);
 
-    // Check if a movement button is still active after an action is taken
+    if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
+      setActiveMovement(action);
+      return;
+    }
+
     if (activeMovement) {
       sendCommand(activeMovement);
     }
