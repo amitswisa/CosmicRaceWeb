@@ -148,14 +148,27 @@ const ControllerPage = () => {
   }
 };
 
-const ControlButton = ({ onTouchStart, onTouchEnd, src, alt, ...props }) => {
+const ControlButton = ({
+  onTouchStart,
+  onTouchEnd,
+  src,
+  alt,
+  style,
+  ...props
+}) => {
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <button
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      onContextMenu={handleContextMenu}
+      style={style}
       className="controllerBtn btn btn-danger"
       {...props}>
-      <img src={src} alt={alt} {...props} />
+      <img src={src} alt={alt} draggable="false" {...props} />
     </button>
   );
 };
