@@ -67,11 +67,10 @@ const ControllerPage = () => {
 
     if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
       setActiveMovement(action);
-      return;
-    }
-
-    if (activeMovement) {
-      sendCommand(activeMovement);
+    } else {
+      if (activeMovement === "RUN_LEFT" || activeMovement === "RUN_RIGHT") {
+        sendCommand(activeMovement);
+      }
     }
   };
 
@@ -143,12 +142,14 @@ const ControllerPage = () => {
             <Container className="d-flex flex-row controllerActionKeys">
               <ControlButton
                 onTouchStart={onButtonPressed("ATTACK")} // <-- Assuming you want an attack action
+                onTouchEnd={onButtonReleased("ATTACK")}
                 src="lightningAttack.png"
                 style={{ width: "3vw" }}
                 alt="lightning attack"
               />
               <ControlButton
                 onTouchStart={onButtonPressed("JUMP")}
+                onTouchEnd={onButtonReleased("JUMP")}
                 src="upArrow.png"
                 alt="up arrow"
               />
