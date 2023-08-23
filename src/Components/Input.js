@@ -11,6 +11,7 @@ const Input = (props) => {
         value={props.value}
         style={props.style}
         onChange={props.onChange}
+        className="input-room-page"
         required
       />
       {props.instructions ? (

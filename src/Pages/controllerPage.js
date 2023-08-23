@@ -10,6 +10,7 @@ import Headline from "../components/Headline";
 const ControllerPage = () => {
   const navigate = useNavigate();
   const savedUsername = localStorage.getItem("username");
+  const savedCharacter = localStorage.getItem("character");
 
   const wsContext = useContext(WebSocketContext);
   const ws = wsContext.webSocket;
@@ -123,20 +124,13 @@ const ControllerPage = () => {
         <Container className="d-flex flex-column">
           {gameStarted ? (
             <>
-              <Container className="d-flex flex-row scoreBoard">
+              <Container
+                className="d-flex flex-row scoreBoard"
+                style={{ textAlign: "center" }}>
                 <div className="right">
                   <label>
                     Current place: <span>#1</span>
                   </label>
-                </div>
-                <div class="mpBar">
-                  <ProgressBar
-                    animated
-                    now={40}
-                    className="progressBar"
-                    variant="warning"
-                    label="40 / 100"
-                  />
                 </div>
               </Container>
               <Container className="controllerGui d-flex flex-column">
@@ -148,7 +142,7 @@ const ControllerPage = () => {
                         onTouchStart={leftButtonPressed}
                         onTouchEnd={onButtonReleased}
                         className="controllerBtn btn btn-danger">
-                        🠔
+                        <img src="left.png" width="32" alt="left arrow" />
                       </button>
                     </div>
                     <div className="right">
@@ -156,14 +150,26 @@ const ControllerPage = () => {
                         onTouchStart={rightButtonPressed}
                         onTouchEnd={onButtonReleased}
                         className="controllerBtn btn btn-danger">
-                        🠖
+                        <img src="right.png" width="32" alt="right arrow" />
                       </button>
                     </div>
+                  </Container>
+                  <Container className="d-flex flex-row characterView">
+                    <img
+                      src="characters/{savedCharacter}.png"
+                      alt="Character"
+                      width="64"
+                      height="64"
+                    />
                   </Container>
                   <Container className="d-flex flex-row controllerActionKeys">
                     <div className="left">
                       <button className="controllerBtn btn btn-danger">
-                        attack
+                        <img
+                          src="lightningAttack.png"
+                          style={{ width: "3vw" }}
+                          alt="lightning attack"
+                        />
                       </button>
                     </div>
                     <div className="right jumpBtn">
@@ -171,7 +177,7 @@ const ControllerPage = () => {
                         onTouchStart={jumpButtonPressed}
                         onTouchEnd={onButtonReleased}
                         className="controllerBtn btn btn-danger">
-                        ▲
+                        <img src="upArrow.png" width="32" alt="up arrow" />
                       </button>
                     </div>
                   </Container>

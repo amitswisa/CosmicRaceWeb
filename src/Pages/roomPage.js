@@ -34,6 +34,7 @@ const RoomPage = () => {
       if (event.data === "OK") {
         wsContext.setWebSocket(ws);
         localStorage.setItem("username", username);
+        localStorage.setItem("character", Number(character));
         navigate("/play");
       }
     };
@@ -72,22 +73,25 @@ const RoomPage = () => {
               name="username"
               type="text"
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username..."
+              placeholder="Nickname"
+              className="input-room-page"
             />
             <Form.Select
+              className="select-input-room-page"
               aria-label="Character selection"
               onChange={(e) => setCharacter(e.target.value)}>
-              <option>Choose character</option>
-              <option value="1">Character 1</option>
-              <option value="2">Character 2</option>
-              <option value="3">Character 3</option>
-              <option value="4">Character 4</option>
+              <option className="first-option">Choose character</option>
+              <option value="1">Mask Dude</option>
+              <option value="2">Ninja Frog</option>
+              <option value="3">Pink Man</option>
+              <option value="4">Virtual Guy</option>
             </Form.Select>
             <Input
+              className="input-room-page"
               name="roomNumber"
               type="text"
               onChange={(e) => setRoomNumber(e.target.value)}
-              placeholder="#Room number..."
+              placeholder="#Room number"
             />
             <Input name="roomNumber" type="submit" value="Join Room" />
           </Form>

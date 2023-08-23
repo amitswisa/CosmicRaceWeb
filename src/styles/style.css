@@ -161,6 +161,16 @@ pageContainer {
 
 /* Inputs */
 
+.select-input-room-page {
+  font-family: "MinstrelPosterWHG";
+  margin-bottom: -12px;
+  color: #595c5f !important;
+}
+
+.select-input-room-page .first-option {
+  color: #595c5f !important;
+}
+
 input[type="submit"] {
   font-family: "MinstrelPosterWHG";
   letter-spacing: 0.1rem;
@@ -521,6 +531,12 @@ footer {
   justify-content: center;
   align-items: center;
   margin: 25vh 10px;
+}
+
+.characterView {
+  justify-content: center;
+  align-items: center;
+  margin-top: -10vh;
 }
 
 .jumpBtn {
