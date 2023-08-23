@@ -71,8 +71,8 @@ const ControllerPage = () => {
 
   const onButtonReleased = (action) => (e) => {
     e.preventDefault();
-    if (activeMovement) {
-      sendCommand(action);
+    if (activeMovement === "RUN_LEFT" || activeMovement === "RUN_RIGHT") {
+      sendCommand(activeMovement);
     } else {
       sendCommand("IDLE");
       setActiveMovement(null);
