@@ -156,7 +156,7 @@ const ControlButton = ({
   style,
   ...props
 }) => {
-  const handleContextMenu = (e) => {
+  const preventDefault = (e) => {
     e.preventDefault();
   };
 
@@ -164,7 +164,11 @@ const ControlButton = ({
     <button
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      onContextMenu={handleContextMenu}
+      onTouchMove={preventDefault}
+      onContextMenu={preventDefault}
+      onMouseDown={preventDefault}
+      onMouseUp={preventDefault}
+      onClick={preventDefault}
       style={style}
       className="controllerBtn btn btn-danger"
       {...props}>

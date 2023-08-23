@@ -581,3 +581,9 @@ footer {
   box-shadow: 0 2px 10px #1e1e1e;
   font-weight: Bold;
 }
+
+.controllerBtn img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+}
