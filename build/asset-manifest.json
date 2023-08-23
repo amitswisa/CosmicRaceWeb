@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.95348916.css",
+    "main.js": "/static/js/main.c4a44416.js",
+    "static/js/787.04583801.chunk.js": "/static/js/787.04583801.chunk.js",
+    "static/media/bg.jpg": "/static/media/bg.799619a2c61e8c0d95f3.jpg",
+    "static/media/character2.png": "/static/media/character2.c5a9f146c9b8e580699e.png",
+    "static/media/logo.png": "/static/media/logo.f15e7ae988b67e4e4c0e.png",
+    "static/media/MINSPSW_.TTF": "/static/media/MINSPSW_.2f80da54fa3af7b5bc6c.TTF",
+    "static/media/character.png": "/static/media/character.962027d786b80ba848f7.png",
+    "static/media/DragonHunter-9Ynxj.otf": "/static/media/DragonHunter-9Ynxj.bfd266123930ca81297a.otf",
+    "index.html": "/index.html",
+    "main.95348916.css.map": "/static/css/main.95348916.css.map",
+    "main.c4a44416.js.map": "/static/js/main.c4a44416.js.map",
+    "787.04583801.chunk.js.map": "/static/js/787.04583801.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.95348916.css",
+    "static/js/main.c4a44416.js"
+  ]
+}
