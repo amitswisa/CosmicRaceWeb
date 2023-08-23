@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.47828156.css",
-    "main.js": "/static/js/main.915fcbe9.js",
+    "main.js": "/static/js/main.85216f91.js",
     "static/js/787.04583801.chunk.js": "/static/js/787.04583801.chunk.js",
     "static/media/bg.jpg": "/static/media/bg.799619a2c61e8c0d95f3.jpg",
     "static/media/character2.png": "/static/media/character2.c5a9f146c9b8e580699e.png",
@@ -11,11 +11,11 @@
     "static/media/DragonHunter-9Ynxj.otf": "/static/media/DragonHunter-9Ynxj.bfd266123930ca81297a.otf",
     "index.html": "/index.html",
     "main.47828156.css.map": "/static/css/main.47828156.css.map",
-    "main.915fcbe9.js.map": "/static/js/main.915fcbe9.js.map",
+    "main.85216f91.js.map": "/static/js/main.85216f91.js.map",
     "787.04583801.chunk.js.map": "/static/js/787.04583801.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.47828156.css",
-    "static/js/main.915fcbe9.js"
+    "static/js/main.85216f91.js"
   ]
 }

@@ -14,6 +14,7 @@ const ControllerPage = () => {
     window.innerHeight < window.innerWidth
   );
   const [gameStarted, setGameStarted] = useState(true);
+  const [activeMovement, setActiveMovement] = useState(null); // <-- New State
 
   useEffect(() => checkOrientation, []);
   useEffect(() => setupWebSocketListeners, [ws]);
@@ -62,13 +63,24 @@ const ControllerPage = () => {
 
   const onButtonPressed = (action) => (e) => {
     e.preventDefault();
+    if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
+      setActiveMovement(action);
+    }
     sendCommand(action);
   };
 
+  const onButtonReleased = (action) => (e) => {
+    e.preventDefault();
+    if (action === activeMovement) {
+      sendCommand("IDLE");
+      setActiveMovement(null);
+    }
+  };
+
   return (
-    <pageContainer>
+    <Container>
       {isPortrait ? renderPortraitContent() : renderLandscapeReminder()}
-    </pageContainer>
+    </Container>
   );
 
   function renderPortraitContent() {
@@ -101,13 +113,13 @@ const ControllerPage = () => {
             <Container className="left d-flex flex-row controllerMoveKeys">
               <ControlButton
                 onTouchStart={onButtonPressed("RUN_LEFT")}
-                onTouchEnd={onButtonPressed("IDLE")}
+                onTouchEnd={onButtonReleased("RUN_LEFT")} // <-- Updated
                 src="left.png"
                 alt="left arrow"
               />
               <ControlButton
                 onTouchStart={onButtonPressed("RUN_RIGHT")}
-                onTouchEnd={onButtonPressed("IDLE")}
+                onTouchEnd={onButtonReleased("RUN_RIGHT")} // <-- Updated
                 src="right.png"
                 alt="right arrow"
               />
@@ -122,13 +134,13 @@ const ControllerPage = () => {
             </Container>
             <Container className="d-flex flex-row controllerActionKeys">
               <ControlButton
+                onTouchStart={onButtonPressed("ATTACK")} // <-- Assuming you want an attack action
                 src="lightningAttack.png"
                 style={{ width: "3vw" }}
                 alt="lightning attack"
               />
               <ControlButton
                 onTouchStart={onButtonPressed("JUMP")}
-                onTouchEnd={onButtonPressed("IDLE")}
                 src="upArrow.png"
                 alt="up arrow"
               />
