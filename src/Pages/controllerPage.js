@@ -63,17 +63,19 @@ const ControllerPage = () => {
 
   const onButtonPressed = (action) => (e) => {
     e.preventDefault();
-    if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
-      setActiveMovement(action);
-    }
     sendCommand(action);
+
+    // Check if a movement button is still active after an action is taken
+    if (activeMovement) {
+      sendCommand(activeMovement);
+    }
   };
 
   const onButtonReleased = (action) => (e) => {
     e.preventDefault();
-    if (activeMovement === "RUN_LEFT" || activeMovement === "RUN_RIGHT") {
-      sendCommand(activeMovement);
-    } else {
+
+    // If releasing a movement button, send IDLE and reset activeMovement state.
+    if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
       sendCommand("IDLE");
       setActiveMovement(null);
     }
