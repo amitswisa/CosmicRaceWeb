@@ -71,7 +71,9 @@ const ControllerPage = () => {
 
   const onButtonReleased = (action) => (e) => {
     e.preventDefault();
-    if (action === activeMovement) {
+    if (activeMovement) {
+      sendCommand(action);
+    } else {
       sendCommand("IDLE");
       setActiveMovement(null);
     }
