@@ -63,27 +63,26 @@ const ControllerPage = () => {
 
   const onButtonPressed = (action) => (e) => {
     e.preventDefault();
-    sendCommand(action);
-
     if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
-      setActiveMovement(action);
-    } else {
-      if (activeMovement) {
-        sendCommand(activeMovement);
+      if (activeMovement !== action) {
+        // Only send command if the active movement changes
+        sendCommand(action);
+        setActiveMovement(action);
       }
+    } else {
+      // Action buttons like JUMP or ATTACK
+      sendCommand(action);
     }
   };
 
   const onButtonReleased = (action) => (e) => {
     e.preventDefault();
-
-    // If releasing a movement button, send IDLE and reset activeMovement state.
     if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
       sendCommand("IDLE");
       setActiveMovement(null);
-    } else {
-      sendCommand(activeMovement);
     }
+    // Action buttons like JUMP or ATTACK don't change the movement,
+    // so no need to handle them here
   };
 
   return (
