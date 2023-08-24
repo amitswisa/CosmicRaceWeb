@@ -68,7 +68,7 @@ const ControllerPage = () => {
     if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
       setActiveMovement(action);
     } else {
-      if (activeMovement === "RUN_LEFT" || activeMovement === "RUN_RIGHT") {
+      if (activeMovement) {
         sendCommand(activeMovement);
       }
     }
@@ -81,6 +81,8 @@ const ControllerPage = () => {
     if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
       sendCommand("IDLE");
       setActiveMovement(null);
+    } else {
+      sendCommand(activeMovement);
     }
   };
 
