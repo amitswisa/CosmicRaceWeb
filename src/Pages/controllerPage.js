@@ -20,6 +20,7 @@ const ControllerPage = () => {
   ]);
 
   useEffect(() => checkOrientation, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => setupWebSocketListeners, [ws]);
 
   const checkOrientation = () => {
