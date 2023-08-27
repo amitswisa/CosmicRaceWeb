@@ -15,6 +15,9 @@ const ControllerPage = () => {
   );
   const [gameStarted, setGameStarted] = useState(true);
   const [activeMovement, setActiveMovement] = useState(null); // <-- New State
+  const [notificationQueue, SetNotificationQueue] = useState([
+    "Waiting for host to start the game...",
+  ]);
 
   useEffect(() => checkOrientation, []);
   useEffect(() => setupWebSocketListeners, [ws]);
@@ -38,12 +41,42 @@ const ControllerPage = () => {
   };
 
   const handleWebSocketMessage = (event) => {
-    const res = event.data;
+    //const res = event.data;
+    const messageData = JSON.parse(event.data);
 
-    if (res === "isAlive\n") {
-      console.log("response to server: alive");
-      ws.send("ALIVE");
+    // eslint-disable-next-line default-case
+    switch (messageData.ActionType) {
+      case "CONFIRMATION":
+        ws.send("ALIVE");
+        console.log("Passed server alive check.");
+        break;
+      case "NOTIFICATION":
+        if (messageData.MessageContent === "Starting match..") {
+          setGameStarted(true);
+        }
+
+        SetNotificationQueue([
+          ...notificationQueue,
+          messageData.MessageContent,
+        ]);
+        break;
+      case "ACTION":
+        if (messageData.MessageContent === "START") {
+          SetNotificationQueue([...notificationQueue, "Playing!"]);
+        }
+        break;
+      case "MESSAGE":
+        if (messageData.MessageContent === "MATCH_TERMINATION") {
+          alert("Game has ended. Returning to room page.");
+          navigate("/room");
+        }
+        break;
     }
+
+    // if (res === "isAlive\n") {
+    //   console.log("response to server: alive");
+    //   ws.send("ALIVE");
+    // }
   };
 
   const handleWebSocketClose = () => {
@@ -110,8 +143,10 @@ const ControllerPage = () => {
           className="d-flex flex-row scoreBoard"
           style={{ textAlign: "center" }}>
           <div className="right">
-            <label>
-              Current place: <span>#1</span>
+            <label className="notificationLabel">
+              {gameStarted
+                ? notificationQueue[notificationQueue.length - 1]
+                : "Game Rank: #1"}
             </label>
           </div>
         </Container>
