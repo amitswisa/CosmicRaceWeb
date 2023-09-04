@@ -7,6 +7,7 @@ import Headline from "../components/Headline";
 const ControllerPage = () => {
   const navigate = useNavigate();
   const savedUsername = localStorage.getItem("username");
+  const savedCharacter = localStorage.getItem("character");
   const wsContext = useContext(WebSocketContext);
   const ws = wsContext.webSocket;
 
@@ -168,20 +169,13 @@ const ControllerPage = () => {
                 alt="right arrow"
               />
             </Container>
-            <Container className="d-flex flex-row characterView">
-              <img
-                src={`characters/${savedUsername}.png`}
-                alt="Character"
-                width="64"
-                height="64"
-              />
-            </Container>
+            <Container className="d-flex flex-row characterView"></Container>
             <Container className="d-flex flex-row controllerActionKeys">
               <ControlButton
                 onTouchStart={onButtonPressed("ATTACK")} // <-- Assuming you want an attack action
                 onTouchEnd={onButtonReleased("ATTACK")}
                 src="lightningAttack.png"
-                style={{ width: "3vw" }}
+                imgStyle={{ width: "32px" }}
                 alt="lightning attack"
               />
               <ControlButton
@@ -212,6 +206,7 @@ const ControlButton = ({
   src,
   alt,
   style,
+  imgStyle,
   ...props
 }) => {
   const preventDefault = (e) => {
@@ -230,7 +225,7 @@ const ControlButton = ({
       style={style}
       className="controllerBtn btn btn-danger"
       {...props}>
-      <img src={src} alt={alt} draggable="false" {...props} />
+      <img src={src} alt={alt} draggable="false" style={imgStyle} {...props} />
     </button>
   );
 };
