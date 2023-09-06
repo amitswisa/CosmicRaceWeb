@@ -1,130 +1,124 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useContext, useRef, useMemo } from "react";
+import { useState, useEffect, useContext } from "react";
 import WebSocketContext from "../contexts/WebSocketContext";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Headline from "../components/Headline";
 
-const ACTION_TYPES = {
-  CONFIRMATION: "CONFIRMATION",
-  NOTIFICATION: "NOTIFICATION",
-  ACTION: "ACTION",
-  MESSAGE: "MESSAGE",
-};
-
 const ControllerPage = () => {
   const navigate = useNavigate();
+  const savedUsername = localStorage.getItem("username");
+  const savedCharacter = localStorage.getItem("character");
   const wsContext = useContext(WebSocketContext);
   const ws = wsContext.webSocket;
-
-  const savedUsername = useRef(localStorage.getItem("username"));
-  const savedCharacter = useRef(localStorage.getItem("character"));
 
   const [isPortrait, setIsPortrait] = useState(
     window.innerHeight < window.innerWidth
   );
-  const [gameStarted, setGameStarted] = useState(false);
-  const [activeMovement, setActiveMovement] = useState(null);
-  const [notificationQueue, setNotificationQueue] = useState([
+  const [gameStarted, setGameStarted] = useState(true);
+  const [activeMovement, setActiveMovement] = useState(null); // <-- New State
+  const [notificationQueue, SetNotificationQueue] = useState([
     "Waiting for host to start the game...",
   ]);
 
-  useEffect(() => {
-    const handleResize = () => {
+  useEffect(() => checkOrientation, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setupWebSocketListeners, [ws]);
+
+  const checkOrientation = () => {
+    const handleResize = () =>
       setIsPortrait(window.innerHeight < window.innerWidth);
-    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  };
 
-  useEffect(() => {
+  const setupWebSocketListeners = () => {
     if (!ws) {
       alert("You are not registered to any room..");
       navigate("/room");
       return;
     }
 
-    const handleWebSocketMessage = (event) => {
-      const messageData = JSON.parse(event.data);
-
-      switch (messageData.ActionType) {
-        case ACTION_TYPES.CONFIRMATION:
-          ws.send("ALIVE");
-          break;
-        case ACTION_TYPES.NOTIFICATION:
-          if (messageData.MessageContent === "Starting match..") {
-            setGameStarted(true);
-          }
-          setNotificationQueue((prevQueue) => [
-            ...prevQueue,
-            messageData.MessageContent,
-          ]);
-          break;
-        case ACTION_TYPES.ACTION:
-          if (messageData.MessageContent === "START") {
-            setNotificationQueue((prevQueue) => [...prevQueue, "Playing!"]);
-          }
-          break;
-        case ACTION_TYPES.MESSAGE:
-          if (messageData.MessageContent === "MATCH_TERMINATION") {
-            alert("Game has ended. Returning to room page.");
-            navigate("/room");
-          }
-          break;
-        default:
-          break;
-      }
-    };
-
-    const handleWebSocketClose = () => {
-      wsContext.setWebSocket(null);
-      navigate("/");
-    };
-
     ws.onmessage = handleWebSocketMessage;
     ws.onclose = handleWebSocketClose;
+  };
 
-    return () => {
-      ws.onmessage = null;
-      ws.onclose = null;
-    };
-  }, [ws, navigate, wsContext]);
+  const handleWebSocketMessage = (event) => {
+    //const res = event.data;
+    const messageData = JSON.parse(event.data);
+
+    // eslint-disable-next-line default-case
+    switch (messageData.ActionType) {
+      case "CONFIRMATION":
+        ws.send("ALIVE");
+        console.log("Passed server alive check.");
+        break;
+      case "NOTIFICATION":
+        if (messageData.MessageContent === "Starting match..") {
+          setGameStarted(true);
+        }
+
+        SetNotificationQueue([
+          ...notificationQueue,
+          messageData.MessageContent,
+        ]);
+        break;
+      case "ACTION":
+        if (messageData.MessageContent === "START") {
+          SetNotificationQueue([...notificationQueue, "Playing!"]);
+        }
+        break;
+      case "MESSAGE":
+        if (messageData.MessageContent === "MATCH_TERMINATION") {
+          alert("Game has ended. Returning to room page.");
+          navigate("/room");
+        }
+        break;
+    }
+
+    // if (res === "isAlive\n") {
+    //   console.log("response to server: alive");
+    //   ws.send("ALIVE");
+    // }
+  };
+
+  const handleWebSocketClose = () => {
+    wsContext.setWebSocket(null);
+    navigate("/");
+  };
 
   const sendCommand = (action) => {
     const message = {
       m_MessageType: "COMMAND",
-      m_Username: savedUsername.current,
+      m_Username: savedUsername,
       m_Action: action,
       m_Location: { x: 0.0, y: 0.0 },
     };
     ws.send(JSON.stringify(message));
   };
 
-  const onButtonPressed = useMemo(
-    () => (action) => (e) => {
-      e.preventDefault();
-      if (["RUN_LEFT", "RUN_RIGHT"].includes(action)) {
-        if (activeMovement !== action) {
-          sendCommand(action);
-          setActiveMovement(action);
-        }
-      } else {
+  const onButtonPressed = (action) => (e) => {
+    e.preventDefault();
+    if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
+      if (activeMovement !== action) {
+        // Only send command if the active movement changes
         sendCommand(action);
+        setActiveMovement(action);
       }
-    },
-    [activeMovement]
-  );
+    } else {
+      // Action buttons like JUMP or ATTACK
+      sendCommand(action);
+    }
+  };
 
-  const onButtonReleased = useMemo(
-    () => (action) => (e) => {
-      e.preventDefault();
-      if (["RUN_LEFT", "RUN_RIGHT"].includes(action)) {
-        sendCommand("IDLE");
-        setActiveMovement(null);
-      }
-    },
-    []
-  );
+  const onButtonReleased = (action) => (e) => {
+    e.preventDefault();
+    if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
+      sendCommand("IDLE");
+      setActiveMovement(null);
+    }
+    // Action buttons like JUMP or ATTACK don't change the movement,
+    // so no need to handle them here
+  };
 
   return (
     <Container>
