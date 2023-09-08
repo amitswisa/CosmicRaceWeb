@@ -20,10 +20,14 @@ const ControllerPage = () => {
   const [notificationQueue, SetNotificationQueue] = useState([
     "Waiting for host to start the game...",
   ]);
+  const [isLandscape, setIsLandscape] = useState(
+    window.innerWidth > window.innerHeight
+  );
 
   const checkOrientation = () => {
-    const handleResize = () =>
-      setIsPortrait(window.innerHeight < window.innerWidth);
+    const handleResize = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   };
@@ -123,7 +127,7 @@ const ControllerPage = () => {
 
   return (
     <Container>
-      {isPortrait ? renderPortraitContent() : renderLandscapeReminder()}
+      {isLandscape ? renderGameControls() : renderLandscapeReminder()}
     </Container>
   );
 
@@ -195,7 +199,7 @@ const ControllerPage = () => {
   function renderLandscapeReminder() {
     return (
       <Container className="portraitReminder">
-        <h1>Please switch to Portrait Mode for optimal viewing.</h1>
+        <h1>Please switch to Landscape Mode for optimal viewing.</h1>
       </Container>
     );
   }
