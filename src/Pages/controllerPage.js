@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useContext } from "react";
 import WebSocketContext from "../contexts/WebSocketContext";
 import { useNavigate } from "react-router-dom";
@@ -20,10 +21,6 @@ const ControllerPage = () => {
     "Waiting for host to start the game...",
   ]);
 
-  useEffect(() => checkOrientation, []);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setupWebSocketListeners, [ws]);
-
   const checkOrientation = () => {
     const handleResize = () =>
       setIsPortrait(window.innerHeight < window.innerWidth);
@@ -41,6 +38,9 @@ const ControllerPage = () => {
     ws.onmessage = handleWebSocketMessage;
     ws.onclose = handleWebSocketClose;
   };
+
+  useEffect(checkOrientation, []);
+  useEffect(setupWebSocketListeners, [ws]);
 
   const handleWebSocketMessage = (event) => {
     //const res = event.data;
