@@ -39,6 +39,7 @@ const ControllerPage = () => {
     ws.onclose = handleWebSocketClose;
   };
 
+  //Commit test
   useEffect(checkOrientation, []);
   useEffect(setupWebSocketListeners, [ws]);
 
