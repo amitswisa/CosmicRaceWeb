@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useContext } from "react";
 import WebSocketContext from "../contexts/WebSocketContext";
 import { useNavigate } from "react-router-dom";
@@ -8,88 +7,77 @@ import Headline from "../components/Headline";
 const ControllerPage = () => {
   const navigate = useNavigate();
   const savedUsername = localStorage.getItem("username");
-  const savedCharacter = localStorage.getItem("character");
   const wsContext = useContext(WebSocketContext);
   const ws = wsContext.webSocket;
 
-  const [isPortrait, setIsPortrait] = useState(
-    window.innerHeight < window.innerWidth
-  );
-  const [gameStarted, setGameStarted] = useState(true);
-  const [activeMovement, setActiveMovement] = useState(null); // <-- New State
-  const [notificationQueue, SetNotificationQueue] = useState([
-    "Waiting for host to start the game...",
-  ]);
   const [isLandscape, setIsLandscape] = useState(
     window.innerWidth > window.innerHeight
   );
+  const [gameStarted, setGameStarted] = useState(true);
+  const [activeMovement, setActiveMovement] = useState(null);
+  const [notificationQueue, setNotificationQueue] = useState([
+    "Waiting for host to start the game...",
+  ]);
 
-  const checkOrientation = () => {
+  useEffect(() => {
     const handleResize = () => {
-      setIsLandscape(window.innerWidth > window.innerHeight);
+      const newOrientation = window.innerWidth > window.innerHeight;
+      if (newOrientation !== isLandscape) setIsLandscape(newOrientation);
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  };
 
-  const setupWebSocketListeners = () => {
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial setup
+
+    // WebSocket listeners
     if (!ws) {
       alert("You are not registered to any room..");
       navigate("/room");
       return;
     }
 
-    ws.onmessage = handleWebSocketMessage;
-    ws.onclose = handleWebSocketClose;
-  };
+    const handleWebSocketMessage = (event) => {
+      const messageData = JSON.parse(event.data);
+      switch (messageData.ActionType) {
+        case "CONFIRMATION":
+          ws.send("ALIVE");
+          console.log("Passed server alive check.");
+          break;
+        case "NOTIFICATION":
+          if (messageData.MessageContent === "Starting match..") {
+            setGameStarted(true);
+          }
+          setNotificationQueue((prev) => [...prev, messageData.MessageContent]);
+          break;
+        case "ACTION":
+          if (messageData.MessageContent === "START") {
+            setNotificationQueue((prev) => [...prev, "Playing!"]);
+          }
+          break;
+        case "MESSAGE":
+          if (messageData.MessageContent === "MATCH_TERMINATION") {
+            alert("Game has ended. Returning to room page.");
+            navigate("/room");
+          }
+          break;
+        default:
+          break;
+      }
+    };
 
-  //Commit test
-  useEffect(checkOrientation, []);
-  useEffect(setupWebSocketListeners, [ws]);
+    const handleWebSocketClose = () => {
+      wsContext.setWebSocket(null);
+      navigate("/");
+    };
 
-  const handleWebSocketMessage = (event) => {
-    //const res = event.data;
-    const messageData = JSON.parse(event.data);
+    ws.addEventListener("message", handleWebSocketMessage);
+    ws.addEventListener("close", handleWebSocketClose);
 
-    // eslint-disable-next-line default-case
-    switch (messageData.ActionType) {
-      case "CONFIRMATION":
-        ws.send("ALIVE");
-        console.log("Passed server alive check.");
-        break;
-      case "NOTIFICATION":
-        if (messageData.MessageContent === "Starting match..") {
-          setGameStarted(true);
-        }
-
-        SetNotificationQueue([
-          ...notificationQueue,
-          messageData.MessageContent,
-        ]);
-        break;
-      case "ACTION":
-        if (messageData.MessageContent === "START") {
-          SetNotificationQueue([...notificationQueue, "Playing!"]);
-        }
-        break;
-      case "MESSAGE":
-        if (messageData.MessageContent === "MATCH_TERMINATION") {
-          alert("Game has ended. Returning to room page.");
-          navigate("/room");
-        }
-        break;
-    }
-
-    // if (res === "isAlive\n") {
-    //   console.log("response to server: alive");
-    //   ws.send("ALIVE");
-    // }
-  };
-
-  const handleWebSocketClose = () => {
-    wsContext.setWebSocket(null);
-    navigate("/");
-  };
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      ws.removeEventListener("message", handleWebSocketMessage);
+      ws.removeEventListener("close", handleWebSocketClose);
+    };
+  }, [ws, isLandscape, navigate, wsContext]);
 
   const sendCommand = (action) => {
     const message = {
@@ -105,12 +93,10 @@ const ControllerPage = () => {
     e.preventDefault();
     if (action === "RUN_LEFT" || action === "RUN_RIGHT") {
       if (activeMovement !== action) {
-        // Only send command if the active movement changes
         sendCommand(action);
         setActiveMovement(action);
       }
     } else {
-      // Action buttons like JUMP or ATTACK
       sendCommand(action);
     }
   };
@@ -121,8 +107,6 @@ const ControllerPage = () => {
       sendCommand("IDLE");
       setActiveMovement(null);
     }
-    // Action buttons like JUMP or ATTACK don't change the movement,
-    // so no need to handle them here
   };
 
   return (
@@ -131,17 +115,6 @@ const ControllerPage = () => {
     </Container>
   );
 
-  function renderPortraitContent() {
-    return (
-      <Container className="d-flex flex-column">
-        {gameStarted ? (
-          renderGameControls()
-        ) : (
-          <Headline title="Waiting for host to start the game..." />
-        )}
-      </Container>
-    );
-  }
   //asd
   function renderGameControls() {
     return (
@@ -204,7 +177,6 @@ const ControllerPage = () => {
     );
   }
 };
-
 const ControlButton = ({
   onTouchStart,
   onTouchEnd,
