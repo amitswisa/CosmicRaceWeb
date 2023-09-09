@@ -15,6 +15,7 @@ const ControllerPage = () => {
   );
   const [gameStarted, setGameStarted] = useState(true);
   const [activeMovement, setActiveMovement] = useState(null);
+  const [isEliminate, setIsEliminate] = useState(false);
   const [notificationQueue, setNotificationQueue] = useState([
     "Waiting for host to start the game...",
   ]);
@@ -58,6 +59,9 @@ const ControllerPage = () => {
             alert("Game has ended. Returning to room page.");
             navigate("/room");
           }
+          break;
+        case "ELIMINATION":
+          setIsEliminate(true);
           break;
         default:
           break;
@@ -111,7 +115,15 @@ const ControllerPage = () => {
 
   return (
     <Container>
-      {isLandscape ? renderGameControls() : renderLandscapeReminder()}
+      {isEliminate ? (
+        <Container className="eliminationContainer">
+          <h1>You are eliminated!</h1>
+        </Container>
+      ) : isLandscape ? (
+        renderGameControls()
+      ) : (
+        renderLandscapeReminder()
+      )}
     </Container>
   );
 
