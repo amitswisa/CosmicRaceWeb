@@ -14,8 +14,8 @@ const RoomPage = () => {
   const wsContext = useContext(WebSocketContext);
 
   function joinRoom() {
-    //const ws = new WebSocket("ws://102.37.156.78:8081");
-    const ws = new WebSocket("ws://localhost:8081");
+    const ws = new WebSocket("ws://102.37.156.78:8081");
+    //const ws = new WebSocket("ws://localhost:8081");
 
     ws.onopen = () => {
       // On connection open, send a message to the server.
