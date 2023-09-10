@@ -18,6 +18,10 @@ const MainPage = () => {
         <LinkNavigation link="/Login" text="Login with existing account" />
         <LinkNavigation link="/Register" text="Register with new account" />
         <LinkNavigation link="/room" text="Play as a guest" />
+        <LinkNavigation
+          link="http://localhost:3001/CosmicRace-installer-1.0.exe"
+          text="Download CosmicRace"
+        />
       </div>
     </header>
   );
