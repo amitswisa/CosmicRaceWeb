@@ -5,6 +5,8 @@ const initialState = {
     coins: 0,
     wins: 0,
     loses: 0,
+    level: 0,
+    xp: 0,
   },
 };
 
@@ -18,6 +20,8 @@ const userSlice = createSlice({
       state.userData.coins = action.payload.coins;
       state.userData.wins = action.payload.wins;
       state.userData.loses = action.payload.loses;
+      state.userData.xp = action.payload.xp;
+      state.userData.level = action.payload.level;
     },
   },
 });
