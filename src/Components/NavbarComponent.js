@@ -45,7 +45,7 @@ function NavbarComponent() {
                         }}>
                         <Download style={{ marginRight: "5px" }} />
                         <a
-                          href="InstallerFolder/CosmicRaceInstaller.exe"
+                          href="http://cosmicrace.tech/CosmicRace-installer-1.0.exe"
                           download="CosmicRaceInstaller">
                           <button type="button">Download</button>
                         </a>
