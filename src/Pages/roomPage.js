@@ -73,7 +73,7 @@ const RoomPage = () => {
             <Input
               name="username"
               type="text"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
               placeholder="Nickname"
               className="input-room-page"
             />
